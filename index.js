@@ -43,7 +43,21 @@ async function main() {
             console.log(`stdout: ${stdout}`);
     });
     console.log('Generated a core')
-    
+
+
+    // check core exist
+    exec("ls -all", (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+    });
+    console.log('Generated a core')
 
     // Write the file
     //const filePath = path.join(".", dumpName);
@@ -51,16 +65,16 @@ async function main() {
     //console.log('File was created successfully.');
 
     // Upload the artifact
-//    const uploadResponse = await artifact.uploadArtifact(
-//      dumpName,
-//      [filePath],
-//      ".",
-//      {
-//        retentionDays: 10
-//      }
-//    );
-//
-//    console.log(`Upload successful: ${uploadResponse.artifactId}, size: ${uploadResponse.size}`);
+    const uploadResponse = await artifact.uploadArtifact(
+      dumpName,
+      ['sample.bf'],
+      ".",
+      {
+        retentionDays: 10
+      }
+    );
+
+    console.log(`Upload successful: ${uploadResponse.artifactId}, size: ${uploadResponse.size}`);
   } catch (error) {
     console.error('Failed to upload artifact:', error);
     core.setFailed(error.message);
