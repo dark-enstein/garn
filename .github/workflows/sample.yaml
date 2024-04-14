@@ -24,8 +24,8 @@ jobs:
         run: | 
           sudo service apport start
           sudo service list
-          sudo systemctl list-units
-          sudo systemctl list-units | grep app
+          #sudo systemctl list-units
+          #sudo systemctl list-units | grep app
       - name: Run segfault
         run: ./gen_c || true
       - name: List dir
