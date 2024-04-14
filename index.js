@@ -31,7 +31,7 @@ async function main() {
 
 
     // intentionally segf
-    exec("sysctl kernel.core_pattern ;./gen_c", (error, stdout, stderr) => {
+    await exec("sysctl kernel.core_pattern ;./gen_c", (error, stdout, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
