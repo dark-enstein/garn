@@ -13,7 +13,9 @@ jobs:
           version: latest
           platform: x64
       - name: Build gen_c
-        run: gcc gen.c -o gen_c
+        run: |
+          sudo systemctl -w /home/runner/work/garn/garn/core
+          gcc gen.c -o gen_c
       - name: Hello world action step
         if: false
         #        uses: ./
