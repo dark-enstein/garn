@@ -44,6 +44,7 @@ async function main() {
     });
     console.log('Generated a core')
 
+    await new Promise(r => setTimeout(r, 10000));
 
     // check core exist
     exec("ls -all", (error, stdout, stderr) => {
