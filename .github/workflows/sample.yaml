@@ -14,7 +14,7 @@ jobs:
           platform: x64
       - name: Build gen_c
         run: |
-          sudo sysctl -w kernel.core_pattern='/home/runner/work/garn/garn/core'
+          sudo sysctl -w kernel.core_pattern='/home/runner/work/garn/garn/simu'
           gcc gen.c -o gen_c
       - name: Hello world action step
         if: false
@@ -29,10 +29,12 @@ jobs:
           #sudo systemctl list-units
           #sudo systemctl list-units | grep app
       - name: Run segfault
-        run: ./gen_c || true
+        run: |
+          ./gen_c || true
+          ls -all
       - name: List dir
         run: |
-          set -euxo pipefail
+          set -uxo pipefail
           ls -all
           pwd
           df -h
