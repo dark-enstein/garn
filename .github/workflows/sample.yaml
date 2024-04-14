@@ -27,3 +27,6 @@ jobs:
           ls -all
           pwd
           df -h
+      - name: check appport dir
+        run: |
+          ls -all /var/crash/
