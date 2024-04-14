@@ -23,7 +23,7 @@ jobs:
       - name: Ensure apport is started
         run: | 
           sudo service apport start
-          sudo service list
+          sudo service --status-all
           #sudo systemctl list-units
           #sudo systemctl list-units | grep app
       - name: Run segfault
