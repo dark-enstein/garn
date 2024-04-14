@@ -16,7 +16,7 @@ async function main() {
 
     // Edit sysctl
     const { exec } = require("child_process");
-    exec("sysctl -w kernel.core_pattern='sample.bf'", (error, stdout, stderr) => {
+    exec("sudo sysctl -w kernel.core_pattern='sample.bf'", (error, stdout, stderr) => {
 	    if (error) {
 		console.log(`error: ${error.message}`);
 		return;
