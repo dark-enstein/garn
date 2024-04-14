@@ -1,16 +1,39 @@
 const core = require('@actions/core');
-const github = require('@actions/github');
+const {DefaultArtifactClient} = require('@actions/artifact');
+const path = require('node:path');
+const fs = require('fs').promises; // Use the promise-based functions
 
-try {
-  // `who-to-greet` input defined in action metadata file
-  const nameToGreet = core.getInput('who-to-greet');
-  console.log(`Hello ${nameToGreet}!`);
-  const time = (new Date()).toTimeString();
-  core.setOutput("time", time);
-  // Get the JSON webhook payload for the event that triggered the workflow
-  const payload = JSON.stringify(github.context.payload, undefined, 2)
-  console.log(`The event payload: ${payload}`);
-} catch (error) {
-  core.setFailed(error.message);
+const corePath = './core';
+
+async function main() {
+  try {
+
+    const artifact = new DefaultArtifactClient();
+    const dumpName = core.getInput('name');
+
+    console.log(`Dump name set to: ${dumpName}!`);
+
+    // Write the file
+    const filePath = path.join(".", dumpName);
+    await fs.writeFile(filePath, "sample"); // Use await here to ensure the file is written before uploading
+    console.log('File was created successfully.');
+
+    // Upload the artifact
+    const uploadResponse = await artifact.uploadArtifact(
+      dumpName,
+      [filePath],
+      ".",
+      {
+        retentionDays: 10
+      }
+    );
+
+    console.log(`Upload successful: ${uploadResponse.artifactId}, size: ${uploadResponse.size}`);
+  } catch (error) {
+    console.error('Failed to upload artifact:', error);
+    core.setFailed(error.message);
+  }
 }
+
+main();
 

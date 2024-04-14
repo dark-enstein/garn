@@ -1,0 +1,12 @@
+## The plan: adapter
+
+# get a release from a repo
+# put it in a bin
+# configure kernel_core_pattern
+
+## Bin
+# bin should package the buffer
+# publish it as an artifact
+
+## impl
+input: coredump-name
