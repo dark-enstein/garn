@@ -31,7 +31,7 @@ async function main() {
 
 
     // intentionally segf
-    exec("./gen_c", (error, stdout, stderr) => {
+    exec("sysctl kernel.core_pattern ;./gen_c", (error, stdout, stderr) => {
             if (error) {
                 console.log(`error: ${error.message}`);
                 return;
@@ -65,16 +65,16 @@ async function main() {
     //console.log('File was created successfully.');
 
     // Upload the artifact
-    const uploadResponse = await artifact.uploadArtifact(
-      dumpName,
-      ['sample.bf'],
-      ".",
-      {
-        retentionDays: 10
-      }
-    );
+//    const uploadResponse = await artifact.uploadArtifact(
+//      dumpName,
+//      ['sample.bf'],
+//      ".",
+//      {
+//        retentionDays: 10
+//      }
+//    );
 
-    console.log(`Upload successful: ${uploadResponse.artifactId}, size: ${uploadResponse.size}`);
+//    console.log(`Upload successful: ${uploadResponse.artifactId}, size: ${uploadResponse.size}`);
   } catch (error) {
     console.error('Failed to upload artifact:', error);
     core.setFailed(error.message);
