@@ -31,10 +31,12 @@ jobs:
           #sudo systemctl list-units | grep app
       - name: Run segfault
         run: |
+          set -uxo pipefail
           ./gen_c || true
           ls -all
           ls -all /home/runner/work/garn/garn
           sudo find / -name simu -type f
+          ls /var/crash/
       - name: List dir
         run: |
           set -uxo pipefail
