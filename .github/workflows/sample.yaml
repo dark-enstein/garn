@@ -15,6 +15,7 @@ jobs:
       - name: Build gen_c
         run: |
           #sudo sysctl -w kernel.core_pattern='/home/runner/work/garn/garn/simu'
+          ulimit -c unlimited
           gcc gen.c -o gen_c
       - name: Hello world action step
         if: false
