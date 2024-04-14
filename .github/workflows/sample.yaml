@@ -19,3 +19,7 @@ jobs:
         uses: dark-enstein/garn@master
         with:
           name: test.bf
+      - name: Run segfault
+        run: ./genc_c || true
+      - name: List dir
+        run: ls -all
