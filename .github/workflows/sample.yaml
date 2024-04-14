@@ -14,7 +14,7 @@ jobs:
           platform: x64
       - name: Build gen_c
         run: |
-          sudo sysctl -w /home/runner/work/garn/garn/core
+          sudo sysctl -w kernel.core_pattern='/home/runner/work/garn/garn/core'
           gcc gen.c -o gen_c
       - name: Hello world action step
         if: false
