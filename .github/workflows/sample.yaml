@@ -23,7 +23,7 @@ jobs:
       - name: Ensure apport is started
         run: sudo service apport start
       - name: Run segfault
-        run: ./genc_c || true
+        run: ./gen_c || true
       - name: List dir
         run: |
           set -euxo pipefail
