@@ -15,10 +15,13 @@ jobs:
       - name: Build gen_c
         run: gcc gen.c -o gen_c
       - name: Hello world action step
+        if: false
         #        uses: ./
         uses: dark-enstein/garn@master
         with:
           name: test.bf
+      - name: Ensure apport is started
+        run: sudo service apport start
       - name: Run segfault
         run: ./genc_c || true
       - name: List dir
