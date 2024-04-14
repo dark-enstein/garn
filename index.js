@@ -12,6 +12,23 @@ async function main() {
     const dumpName = core.getInput('name');
 
     console.log(`Dump name set to: ${dumpName}!`);
+    
+
+    // Edit sysctl
+    const { exec } = require("child_process");
+    exec("sysctl kernel.core_pattern", (error, stdout, stderr) => {
+	    if (error) {
+		console.log(`error: ${error.message}`);
+		return;
+	    }
+	    if (stderr) {
+		console.log(`stderr: ${stderr}`);
+		return;
+	    }
+	    console.log(`stdout: ${stdout}`);
+    });
+    console.log('Ran shell script')
+
 
     // Write the file
     const filePath = path.join(".", dumpName);
@@ -19,16 +36,16 @@ async function main() {
     console.log('File was created successfully.');
 
     // Upload the artifact
-    const uploadResponse = await artifact.uploadArtifact(
-      dumpName,
-      [filePath],
-      ".",
-      {
-        retentionDays: 10
-      }
-    );
-
-    console.log(`Upload successful: ${uploadResponse.artifactId}, size: ${uploadResponse.size}`);
+//    const uploadResponse = await artifact.uploadArtifact(
+//      dumpName,
+//      [filePath],
+//      ".",
+//      {
+//        retentionDays: 10
+//      }
+//    );
+//
+//    console.log(`Upload successful: ${uploadResponse.artifactId}, size: ${uploadResponse.size}`);
   } catch (error) {
     console.error('Failed to upload artifact:', error);
     core.setFailed(error.message);
