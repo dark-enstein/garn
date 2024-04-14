@@ -7,6 +7,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+      - name: Set up GCC
+        uses: egor-tensin/setup-gcc@v1
+        with:
+          version: latest
+          platform: x64
+      - name: Build gen_c
+        run: gcc gen.c -o gen_c
       - name: Hello world action step
         #        uses: ./
         uses: dark-enstein/garn@master

@@ -16,7 +16,7 @@ async function main() {
 
     // Edit sysctl
     const { exec } = require("child_process");
-    exec("sysctl kernel.core_pattern", (error, stdout, stderr) => {
+    exec("sysctl -w kernel.core_pattern='sample.bf'", (error, stdout, stderr) => {
 	    if (error) {
 		console.log(`error: ${error.message}`);
 		return;
@@ -27,13 +27,28 @@ async function main() {
 	    }
 	    console.log(`stdout: ${stdout}`);
     });
-    console.log('Ran shell script')
+    console.log('Configured kernel')
 
+
+    // intentionally segf
+    exec("./gen_c", (error, stdout, stderr) => {
+            if (error) {
+                console.log(`error: ${error.message}`);
+                return;
+            }
+            if (stderr) {
+                console.log(`stderr: ${stderr}`);
+                return;
+            }
+            console.log(`stdout: ${stdout}`);
+    });
+    console.log('Generated a core')
+    
 
     // Write the file
-    const filePath = path.join(".", dumpName);
-    await fs.writeFile(filePath, "sample"); // Use await here to ensure the file is written before uploading
-    console.log('File was created successfully.');
+    //const filePath = path.join(".", dumpName);
+    //await fs.writeFile(filePath, "sample"); // Use await here to ensure the file is written before uploading
+    //console.log('File was created successfully.');
 
     // Upload the artifact
 //    const uploadResponse = await artifact.uploadArtifact(
