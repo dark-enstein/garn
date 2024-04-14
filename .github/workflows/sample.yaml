@@ -33,7 +33,7 @@ jobs:
           ./gen_c || true
           ls -all
           ls -all /home/runner/work/garn/garn
-          find / -name simu* -type f
+          sudo find / -name simu* -type f
       - name: List dir
         run: |
           set -uxo pipefail
