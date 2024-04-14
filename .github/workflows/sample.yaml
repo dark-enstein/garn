@@ -22,4 +22,8 @@ jobs:
       - name: Run segfault
         run: ./genc_c || true
       - name: List dir
-        run: ls -all
+        run: |
+          set -euxo pipefail
+          ls -all
+          pwd
+          df -h
