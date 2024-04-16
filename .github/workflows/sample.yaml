@@ -31,8 +31,7 @@ jobs:
           #sudo systemctl list-units | grep app
       - name: Run segfault
         run: |
-          set -uxo pipefail
-	  ulimit -c unlimited
+          set -uxo pipefail && ulimit -c unlimited
           ./gen_c || true
           ls -all
           ls -all /home/runner/work/garn/garn
