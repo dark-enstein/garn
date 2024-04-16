@@ -9,13 +9,13 @@ jobs:
 
       # Build the code
       - name: build
-        run: gcc gen.c -g -o example
+        run: gcc gen.c -g -o gen_c
 
       # Upload the binary, which we will need to debug the core
       - uses: actions/upload-artifact@v3
         with:
           name: executable
-          path: ./example
+          path: ./gen_c
 
       - name: Set cores to get stored in /cores
         run: |
@@ -29,7 +29,7 @@ jobs:
           # Allow core dumps
           ulimit -c unlimited
           # Run the program, triggering core dump
-          ./example
+          ./gen_c
 
       - uses: actions/upload-artifact@v3
         if: ${{ failure() }}  # Run only if something went wrong
