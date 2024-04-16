@@ -1,0 +1,38 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: Coredump Test
+    steps:
+      - uses: actions/checkout@v3
+
+      # Build the code
+      - name: build
+        run: gcc gen.c -g -o example
+
+      # Upload the binary, which we will need to debug the core
+      - uses: actions/upload-artifact@v3
+        with:
+          name: executable
+          path: ./example
+
+      - name: Set cores to get stored in /cores
+        run: |
+          sudo mkdir /cores
+          sudo chmod 777 /cores
+          # Core filenames will be of the form executable.pid.timestamp:
+          sudo bash -c 'echo "/cores/%e.%p.%t" > /proc/sys/kernel/core_pattern'
+          
+      - name: Run the binary
+        run: |
+          # Allow core dumps
+          ulimit -c unlimited
+          # Run the program, triggering core dump
+          ./example
+
+      - uses: actions/upload-artifact@v3
+        if: ${{ failure() }}  # Run only if something went wrong
+        with:
+          name: cores
+          path: /cores
